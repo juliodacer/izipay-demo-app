@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import { View, Image, TextInput, StyleSheet, KeyboardType } from 'react-native'
-// import Icon from 'react-native-vector-icons/Ionicons'
+import React from 'react'
+import { TextInput, StyleSheet, KeyboardType } from 'react-native'
 
 interface Props {
     icon?: string,
@@ -8,7 +7,6 @@ interface Props {
     value: string,
     keyboardType?: KeyboardType,
     secureTextEntry?: boolean,
-    // property: string,
     editable?: boolean,
     onChange: (value: string) => void
 }
@@ -25,31 +23,28 @@ export const CustomTextInput = ({
 }: Props) => {
 
     return (
-        <View style={styles.formInput}>
-            <TextInput
-                style={styles.formTextInput}
-                placeholder={placeholder}
-                keyboardType={keyboardType}
-                value={value}
-                onChangeText={onChange}
-                secureTextEntry={secureTextEntry}
-                editable={editable}
-            />
-        </View>
+        <TextInput
+            style={styles.formTextInput}
+            placeholder={placeholder}
+            keyboardType={keyboardType}
+            value={value}
+            onChangeText={onChange}
+            secureTextEntry={secureTextEntry}
+            editable={editable}
+        />
     )
 }
 
-
 const styles = StyleSheet.create({
     formInput: {
-        flexDirection: 'row',
-        // marginTop: 30,
-        alignItems: 'center'
+        width: "90%",
+        alignItems: 'center',
     },
     formTextInput: {
-        width: "90%",
-        borderBottomWidth: 1,
-        borderBottomColor: '#AAAAAA',
-        marginLeft: 15
+        borderWidth: 1,
+        borderColor: '#AAAAAA',
+        borderRadius: 8,
+        paddingVertical: 10,
+        paddingHorizontal: 15
     },
 })

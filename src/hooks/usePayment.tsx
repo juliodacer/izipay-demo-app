@@ -7,17 +7,9 @@ export const usePayment = () => {
 
     const [responseToken, setResponseToken] = useState<ResponseToken>()
 
-    // {
-    //     "amount": "1.99",
-    //     "merchantCode": "4004345",
-    //     "orderNumber": "1709563217",
-    //     "publicKey": "VErethUtraQuxas57wuMuquprADrAHAb",
-    //     "requestSource": "ECOMMERCE"
-    //   }
+    const getTokenSession = async (transactionId: string, orderNumber: string, amount: string) => {
 
-    const GetTokenSession = async (transactionId: string, orderNumber: string, amount: string = '') => {
-
-        const amoutDecimal = String(parseFloat(amount).toFixed(2))
+        const amountDecimal = String(parseFloat(amount).toFixed(2))
         const headers = { 'Content-Type': 'application/json', 'transactionId': transactionId }
 
         const data = {
@@ -25,13 +17,18 @@ export const usePayment = () => {
             merchantCode: MERCHANT_CODE,
             orderNumber,
             publicKey: PUBLIC_KEY,
-            amount: amoutDecimal,
+            amount: amountDecimal
         }
 
+        console.log("TRANSACTION_ID_HEADER", transactionId)
+        console.log("DATA", JSON.stringify(data, null, 2))
+
         try {
-            const response = await ApiIzipay.post<ResponseToken>('/security/v1/Token/Generate', data, {
-                headers
-            })
+            const response = await ApiIzipay
+                .post<ResponseToken>('/security/v1/Token/Generate', data, {
+                    headers
+                })
+            console.log("RESPONSE", JSON.stringify(response.data, null, 2))
             setResponseToken(response.data)
             // return response.data
         } catch (error) {
@@ -40,7 +37,7 @@ export const usePayment = () => {
     }
 
     return {
-        GetTokenSession,
+        getTokenSession,
         responseToken
     }
 }

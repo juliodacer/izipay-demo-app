@@ -1,5 +1,5 @@
 
-export const getDataOrderDynamic = () => {
+export const generateDataOrderDynamic = () => {
 
     const currentTimeUnix = Math.floor(Date.now()) * 1000;
     const transactionId = currentTimeUnix.toString().slice(0, 14);

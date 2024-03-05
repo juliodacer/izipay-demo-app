@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 interface Props {
     onPress: () => void,
@@ -9,6 +9,7 @@ interface Props {
 export const CustomButton = ({ onPress, title = '' }: Props) => {
     return (
         <TouchableOpacity
+            activeOpacity={0.7}
             style={{
                 ...styles.buttonContainer,
                 borderRadius: 8,
@@ -18,7 +19,7 @@ export const CustomButton = ({ onPress, title = '' }: Props) => {
             }}
             onPress={onPress}
         >
-            <Text style={{ fontSize: 15, color: '#fff' }}>
+            <Text style={{ fontSize: 15, color: '#fff', fontWeight: 'bold' }}>
                 {title}
             </Text>
         </TouchableOpacity>
@@ -27,8 +28,7 @@ export const CustomButton = ({ onPress, title = '' }: Props) => {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        height: 50,
-        // width: '80%',
+        height: 52,
         padding: 15,
         marginBottom: 10
     }

@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export const useInputText = () => {
     const [value, setValue] = useState("");
 
     const onChange = (text: string) => {
-        setValue(text);
+        setValue(text)
     };
 
     return {

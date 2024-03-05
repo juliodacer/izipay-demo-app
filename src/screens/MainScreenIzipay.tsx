@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { CustomTextInput } from '../components/CustomInputText';
-import { ApiIzipay } from '../api/apiIzipay';
 import { useInputText } from '../hooks/useInputText';
 import { CustomButton } from '../components/CustomButton';
 import { usePayment } from '../hooks/usePayment';
@@ -9,15 +8,14 @@ import { EmbebedScreenIzipay } from './EmbebedScreenIzipay';
 import { useDataOrderDynamic } from '../hooks/useDataOrderDynamic';
 
 export const MainScreenIzipay = () => {
-
     const { onChange, value } = useInputText()
-    const { GetTokenSession, responseToken } = usePayment()
+    const { getTokenSession, responseToken } = usePayment()
     const [modalVisible, setModalVisible] = useState(false);
     const { getDataOrderDynamic, dataOrderDynamic } = useDataOrderDynamic()
 
     useEffect(() => {
         if (dataOrderDynamic !== null && dataOrderDynamic !== undefined) {
-            GetTokenSession(dataOrderDynamic.transactionId, dataOrderDynamic.orderNumber, value)
+            getTokenSession(dataOrderDynamic.transactionId, dataOrderDynamic.orderNumber, value)
         }
     }, [dataOrderDynamic])
 
@@ -27,7 +25,6 @@ export const MainScreenIzipay = () => {
 
     useEffect(() => {
         if (responseToken !== undefined && responseToken !== null) {
-            console.log("TOKEN", JSON.stringify(responseToken.response.token))
             setModalVisible(true)
         }
     }, [responseToken])
@@ -39,6 +36,7 @@ export const MainScreenIzipay = () => {
                     placeholder='Ingresa Monto a pagar 00.00'
                     onChange={onChange}
                     value={value}
+                    keyboardType={'numeric'}
                 />
             </View>
             <View style={styles.containerButton}>
@@ -56,7 +54,6 @@ export const MainScreenIzipay = () => {
                     setModalVisible={setModalVisible}
                     token={responseToken?.response.token}
                     currentTimeUnix={dataOrderDynamic?.currentTimeUnix}
-                // url={hr}
                 />
             }
         </View>
@@ -68,7 +65,8 @@ const styles = StyleSheet.create({
         flex: 1, justifyContent: 'center', alignItems: 'center'
     },
     containerInputText: {
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        width: "80%"
     },
     containerButton: {
         marginVertical: 20,
