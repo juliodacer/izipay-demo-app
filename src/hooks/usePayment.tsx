@@ -20,9 +20,6 @@ export const usePayment = () => {
             amount: amountDecimal
         }
 
-        console.log("TRANSACTION_ID_HEADER", transactionId)
-        console.log("DATA", JSON.stringify(data, null, 2))
-
         try {
             const response = await ApiIzipay
                 .post<ResponseToken>('/security/v1/Token/Generate', data, {

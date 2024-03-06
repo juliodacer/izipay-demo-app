@@ -8,10 +8,10 @@ import { EmbebedScreenIzipay } from './EmbebedScreenIzipay';
 import { useDataOrderDynamic } from '../hooks/useDataOrderDynamic';
 
 export const MainScreenIzipay = () => {
-    const { onChange, value } = useInputText()
     const { getTokenSession, responseToken } = usePayment()
-    const [modalVisible, setModalVisible] = useState(false);
     const { getDataOrderDynamic, dataOrderDynamic } = useDataOrderDynamic()
+    const { onChange, value } = useInputText()
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
         if (dataOrderDynamic !== null && dataOrderDynamic !== undefined) {

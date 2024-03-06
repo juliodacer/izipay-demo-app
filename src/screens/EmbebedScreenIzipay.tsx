@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import WebView from 'react-native-webview'
 import { MERCHANT_CODE, ORDER_CURRENCY, PUBLIC_KEY } from '../constants';
@@ -43,10 +43,11 @@ export const EmbebedScreenIzipay = ({
       </head>
       <body>
         <div id='your-iframe-payment'></div>
+        <pre id="payment-message"></pre>
         <script>
         // alert(JSON.stringify("${token}"))
         const iziConfig = {
-            publicKey: "${PUBLIC_KEY}",
+            // publicKey: "${PUBLIC_KEY}",
             config: {
                 transactionId: "${transactionId}",
                 action: 'pay',
@@ -94,8 +95,11 @@ export const EmbebedScreenIzipay = ({
             },
         };
 
-        const callbackResponsePayment = response => document.querySelector('#payment-message').innerHTML = JSON.stringify(response, null, 2);
-        
+        // alert(JSON.stringify(iziConfig))
+        // const callbackResponsePayment = response => document.querySelector('#payment-message').innerHTML = JSON.stringify(response, null, 2);
+        // const callbackResponsePayment3 = response => window.ReactNativeWebView.postMessage(JSON.stringify({ event: 'myCustomEvent', JSON.stringify(response, null, 2) }));
+        const callbackResponsePayment = response => alert("HOLA")
+
         const handleLoadForm = () => {
             try {
                 // alert(JSON.stringify(iziConfig))
@@ -110,7 +114,10 @@ export const EmbebedScreenIzipay = ({
                 izi.LoadForm({
                     authorization: "${token}",
                     keyRSA: 'RSA',
-                    callbackResponse: callbackResponsePayment,
+                    // callbackResponse: callbackResponsePayment,
+                    callbackResponse: function (params) {
+                        window.ReactNativeWebView.postMessage("desde la web") 
+                      }
                 });
 
             } catch (error) {
@@ -149,6 +156,9 @@ export const EmbebedScreenIzipay = ({
                         onError={(syntheticEvent) => {
                             const { nativeEvent } = syntheticEvent;
                             console.warn('WebView error: ', nativeEvent);
+                        }}
+                        onMessage={(event) => {
+                            console.log({ event })
                         }}
                     // injectedJavaScript={`
                     // alert("${String(currentTimeUnix).length}")
