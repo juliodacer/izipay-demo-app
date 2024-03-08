@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const ApiIzipay = axios.create({
-    baseURL: 'https://testapi-pw.izipay.pe:443'
+    baseURL: 'https://sandbox-api-pw.izipay.pe:443'
 })
 
 export {
